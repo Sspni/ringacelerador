@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coil Ring Accelerator — Experimento de Física Grado 11°</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fondo interactivo con rejilla de circuito y partículas cuánticas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="circuit-grid"></div>
+
+  <!-- Contenedor principal de la presentación -->
+  <div id="presentation-app">
+
+    <!-- BARRA SUPERIOR HUD -->
+    <header class="top-hud">
+      <div class="hud-left">
+        <div class="lab-badge">
+          <div class="lab-pulse"></div>
+          <span>PHYSICS LAB 11°</span>
+        </div>
+        <div class="presentation-title-hud">
+          COIL RING ACCELERATOR <span>/ Acelerador Electromagnético</span>
+        </div>
+      </div>
+
+      <div class="hud-center">
+        <div class="slide-counter">
+          <span class="current-num" id="hud-current-slide">01</span>
+          <span class="total-num">/ 16</span>
+        </div>
+        <div class="progress-container" title="Progreso de la exposición">
+          <div class="progress-bar" id="hud-progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="hud-right">
+        <button class="hud-btn" id="btn-menu-drawer" title="Índice de Diapositivas (M)">
+          <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          <span>Índice</span>
+        </button>
+        <button class="hud-btn" id="btn-fullscreen" title="Modo Presentación Pantalla Completa (F)">
+          <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+          <span id="btn-fs-label">Presentación</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Indicador flotante cuando está en modo presentación -->
+    <div class="fs-indicator" id="fs-indicator" title="Clic para salir de pantalla completa">
+      Modo Presentación (Presiona ESC o F para salir)
+    </div>
+
+    <!-- CONTENEDOR VIEWPORT DE DIAPOSITIVAS -->
+    <main class="slides-viewport">
+
+      <!-- ==========================================
+           SLIDE 1 — PORTADA
+           ========================================== -->
+      <section class="slide active" id="slide-1" data-index="1">
+        <div class="cover-wrapper">
+          <div class="cover-badge">
+            <span>Experimento Escolar de Física</span>
+            <span style="opacity:0.4;">|</span>
+            <span>Laboratorio Electromagnético</span>
+          </div>
+
+          <h1 class="cover-title">COIL RING ACCELERATOR</h1>
+          <h2 class="cover-subtitle">Acelerador electromagnético de bobinas cilíndricas</h2>
+
+          <!-- Ilustración animada de pista, esfera y bobinas -->
+          <div class="cover-anim-container">
+            <canvas id="cover-canvas" width="850" height="180"></canvas>
+          </div>
+
+          <div class="cover-authors">
+            <div class="author-chip">Nicolas Valencia</div>
+            <div class="author-chip">Yojhan Cubillos</div>
+            <div class="author-chip">Santiago Hernandez</div>
+            <div class="author-chip">Matias Ramos</div>
+            <div class="grade-badge">GRADO 11°</div>
+          </div>
+
+          <button class="btn-primary" id="btn-start-presentation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <span>INICIAR EXPERIMENTO</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 2 — ¿QUÉ PROBLEMA QUEREMOS ESTUDIAR?
+           ========================================== -->
+      <section class="slide" id="slide-2" data-index="2">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">02 // PLANTEAMIENTO DEL PROBLEMA</span>
+            <h2 class="slide-title">¿Qué problema queremos estudiar?</h2>
+          </div>
+          <div class="status-badge badge-theory">Pregunta de Investigación</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="question-hero">
+            <p class="question-text">
+              "¿Cómo podemos observar y medir experimentalmente el movimiento de una esfera metálica cuando recibe una aceleración controlada mediante pulsos electromagnéticos?"
+            </p>
+          </div>
+
+          <!-- Animación visual de aceleración -->
+          <div class="cover-anim-container" style="height: 140px;">
+            <canvas id="canvas-slide-2" width="900" height="140"></canvas>
+          </div>
+
+          <div class="concepts-row">
+            <div class="sci-card concept-card">
+              <div class="concept-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <h3 class="sci-card-title" style="justify-content:center;">Fuerza</h3>
+              <p class="sci-card-desc">Interacción electromagnética capaz de alterar el estado de reposo de la esfera ferromagnética.</p>
+            </div>
+
+            <div class="sci-card concept-card">
+              <div class="concept-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/></svg>
+              </div>
+              <h3 class="sci-card-title" style="justify-content:center;">Movimiento</h3>
+              <p class="sci-card-desc">Cambio de posición en el espacio en función del tiempo a lo largo de una trayectoria lineal calibrada.</p>
+            </div>
+
+            <div class="sci-card concept-card">
+              <div class="concept-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+              </div>
+              <h3 class="sci-card-title" style="justify-content:center;">Electromagnetismo</h3>
+              <p class="sci-card-desc">Relación entre la corriente eléctrica circulando por una bobina y el campo magnético inducido.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 3 — ¿QUÉ ES UN COIL RING ACCELERATOR?
+           ========================================== -->
+      <section class="slide" id="slide-3" data-index="3">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">03 // CONCEPTO FUNDAMENTAL</span>
+            <h2 class="slide-title">¿Qué es un Coil Ring Accelerator?</h2>
+          </div>
+          <div class="status-badge badge-pending">Dato experimental pendiente</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="coil-anatomy-grid">
+            <!-- Diagrama interactivo de bobinas -->
+            <div class="diagram-interactive-area">
+              <canvas id="canvas-slide-3" width="580" height="240"></canvas>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">
+                Haz clic en los botones o en el diagrama para explorar cada elemento
+              </div>
+              <div class="interactive-targets-row">
+                <button class="target-tab active" data-target="bobina">Bobina</button>
+                <button class="target-tab" data-target="campo">Campo Magnético</button>
+                <button class="target-tab" data-target="esfera">Esfera Ferromagnética</button>
+                <button class="target-tab" data-target="control">Sistema de Control</button>
+              </div>
+            </div>
+
+            <!-- Ficha explicativa dinámica -->
+            <div class="interactive-info-panel" id="coil-info-panel">
+              <div class="status-badge badge-theory" id="coil-detail-tag">COMPONENTE: BOBINA</div>
+              <h3 class="sci-card-title" id="coil-detail-title" style="margin-top:10px; font-size:1.35rem;">Bobina Cilíndrica (Solenoide)</h3>
+              <p class="sci-card-desc" id="coil-detail-desc" style="font-size:0.95rem; line-height:1.6; margin-top:10px;">
+                Genera un campo magnético transitorio intenso en su núcleo hueco cuando una corriente eléctrica circula a través de sus espiras de cobre.
+              </p>
+              <div style="margin-top:16px; padding:12px; background:rgba(0,240,255,0.06); border-left:3px solid var(--cyan-primary); border-radius:4px; font-size:0.85rem; color:#b0cce6;" id="coil-detail-role">
+                <strong>Rol en el proyecto:</strong> Proporciona el gradiente magnético de atracción inicial para impulsar la esfera a lo largo del riel.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 4 — PRINCIPIO FÍSICO
+           ========================================== -->
+      <section class="slide" id="slide-4" data-index="4">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">04 // FUNDAMENTO CIENTÍFICO</span>
+            <h2 class="slide-title">Principio Físico del Electromagnetismo</h2>
+          </div>
+          <div class="status-badge badge-theory">Marco Teórico</div>
+        </div>
+
+        <div class="slide-body">
+          <!-- Cadena de Causalidad -->
+          <div class="physics-chain">
+            <div class="chain-step">
+              <div style="color:var(--cyan-primary); font-family:var(--font-mono); font-size:0.75rem;">ETAPA 1</div>
+              <strong style="color:#ffffff;">Corriente Eléctrica (I)</strong>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Paso de carga por espiras</div>
+            </div>
+            <div class="chain-arrow">➔</div>
+            <div class="chain-step">
+              <div style="color:var(--cyan-primary); font-family:var(--font-mono); font-size:0.75rem;">ETAPA 2</div>
+              <strong style="color:#ffffff;">Campo Magnético (B)</strong>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Líneas de flujo toroidal</div>
+            </div>
+            <div class="chain-arrow">➔</div>
+            <div class="chain-step">
+              <div style="color:var(--cyan-primary); font-family:var(--font-mono); font-size:0.75rem;">ETAPA 3</div>
+              <strong style="color:#ffffff;">Fuerza Magnética (F)</strong>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Gradiente de atracción</div>
+            </div>
+            <div class="chain-arrow">➔</div>
+            <div class="chain-step">
+              <div style="color:var(--green-laser); font-family:var(--font-mono); font-size:0.75rem;">ETAPA 4</div>
+              <strong style="color:#ffffff;">Movimiento y Aceleración</strong>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Velocidad creciente</div>
+            </div>
+          </div>
+
+          <div class="physics-split">
+            <!-- Visualizador de líneas de campo magnético -->
+            <div class="magnetic-sim-box">
+              <canvas id="canvas-slide-4" width="550" height="240"></canvas>
+            </div>
+
+            <!-- Ecuación conceptual y explicación -->
+            <div class="formula-box">
+              <div style="font-size:0.8rem; letter-spacing:1px; color:var(--text-muted); margin-bottom:6px;">
+                REFERENCIA CONCEPTUAL // CAMPO MAGNÉTICO DE UN SOLENOIDE
+              </div>
+              <div class="formula-display">B ≈ μ · (N / L) · I</div>
+              <div class="formula-vars">
+                <div class="formula-var"><code>B</code> Intensidad de campo</div>
+                <div class="formula-var"><code>μ</code> Permeabilidad magnética</div>
+                <div class="formula-var"><code>N</code> Número de espiras</div>
+                <div class="formula-var"><code>L</code> Longitud de bobina</div>
+                <div class="formula-var"><code>I</code> Corriente eléctrica</div>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-top:14px; text-align:left; line-height:1.5;">
+                <strong>Enfoque Escolar:</strong> En nuestro proyecto escolar de grado 11°, no calculamos el campo magnético diferencial exacto, sino que observamos directamente la <em>consecuencia cinemática</em>: la velocidad adquirida por la esfera metálica.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 5 — ¿CÓMO FUNCIONA EL ACELERADOR?
+           ========================================== -->
+      <section class="slide" id="slide-5" data-index="5">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">05 // SIMULADOR MULTIETAPA</span>
+            <h2 class="slide-title">¿Cómo Funciona el Acelerador?</h2>
+          </div>
+          <div class="status-badge badge-pending">Representación Conceptual</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="sim-container">
+            <!-- Canvas de simulación animada de pista horizontal -->
+            <div class="sim-track-canvas-wrapper">
+              <canvas id="canvas-slide-5" width="1100" height="180"></canvas>
+            </div>
+
+            <!-- Barra de controles del simulador -->
+            <div class="sim-controls-bar">
+              <div class="sim-buttons-group">
+                <button class="btn-primary" id="btn-sim5-start" style="padding:8px 18px; font-size:0.85rem;">INICIAR</button>
+                <button class="btn-secondary" id="btn-sim5-pause">PAUSAR</button>
+                <button class="btn-secondary" id="btn-sim5-reset">REINICIAR</button>
+                <button class="btn-secondary" id="btn-sim5-speed">VELOCIDAD: 1X</button>
+              </div>
+              <div class="sim-telemetry-pill" id="sim5-telemetry">
+                ESTADO: LISTO // ETAPA 0
+              </div>
+            </div>
+
+            <!-- Explicación de las etapas -->
+            <div class="sim-steps-grid">
+              <div class="sim-step-card">
+                <div class="sim-step-num">ETAPA 01</div>
+                <strong>Alineación Inicial</strong>
+                <p style="color:var(--text-muted); margin-top:4px;">La esfera ferromagnética se coloca en reposo frente a la primera bobina.</p>
+              </div>
+              <div class="sim-step-card">
+                <div class="sim-step-num">ETAPA 02</div>
+                <strong>Pulso Magnético</strong>
+                <p style="color:var(--text-muted); margin-top:4px;">Se energiza la bobina. El campo magnético generado atrae a la esfera con fuerza rápida.</p>
+              </div>
+              <div class="sim-step-card">
+                <div class="sim-step-num">ETAPA 03</div>
+                <strong>Corte y Conmutación</strong>
+                <p style="color:var(--text-muted); margin-top:4px;">La bobina se desenergiza cuando la esfera llega al centro para evitar que sea frenada hacia atrás.</p>
+              </div>
+              <div class="sim-step-card">
+                <div class="sim-step-num">ETAPA 04</div>
+                <strong>Tránsito hacia Sensores</strong>
+                <p style="color:var(--text-muted); margin-top:4px;">La esfera continúa por inercia a velocidad constante hacia la zona de cronometraje óptico.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 6 — COMPONENTES DEL PROYECTO
+           ========================================== -->
+      <section class="slide" id="slide-6" data-index="6">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">06 // HARDWARE Y ELEMENTOS</span>
+            <h2 class="slide-title">Componentes del Proyecto</h2>
+          </div>
+          <div class="status-badge badge-real">Hardware Experimental</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="components-grid">
+            <!-- 1. Bobinas -->
+            <div class="comp-card" data-comp="bobinas">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+              <div class="comp-content">
+                <h4>Bobinas Electromagnéticas</h4>
+                <p>Espiras de cobre esmaltado que generan el gradiente de aceleración.</p>
+              </div>
+            </div>
+
+            <!-- 2. Esfera -->
+            <div class="comp-card" data-comp="esfera">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></div>
+              <div class="comp-content">
+                <h4>Esfera Ferromagnética</h4>
+                <p>Objeto de prueba susceptible a la fuerza magnética inducida.</p>
+              </div>
+            </div>
+
+            <!-- 3. Arduino -->
+            <div class="comp-card" data-comp="arduino">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></div>
+              <div class="comp-content">
+                <h4>Microcontrolador Arduino</h4>
+                <p>Cerebro digital del cronómetro de alta resolución temporal.</p>
+              </div>
+            </div>
+
+            <!-- 4. Sensor A -->
+            <div class="comp-card" data-comp="sensorA">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+              <div class="comp-content">
+                <h4>Sensor A (Disparo Inicio)</h4>
+                <p>Detecta el paso de la esfera e inicia el registro del cronómetro t₀.</p>
+              </div>
+            </div>
+
+            <!-- 5. Sensor B -->
+            <div class="comp-card" data-comp="sensorB">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+              <div class="comp-content">
+                <h4>Sensor B (Disparo Fin)</h4>
+                <p>Detecta el cruce de la esfera y congela el cronómetro t₁.</p>
+              </div>
+            </div>
+
+            <!-- 6. Cableado -->
+            <div class="comp-card" data-comp="cableado">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zm-3-4h8v2H8z"/></svg></div>
+              <div class="comp-content">
+                <h4>Cableado y Conmutación</h4>
+                <p>Líneas de alimentación y control rápido de corriente.</p>
+              </div>
+            </div>
+
+            <!-- 7. Fuente de Alimentación -->
+            <div class="comp-card" data-comp="fuente">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></div>
+              <div class="comp-content">
+                <h4>Fuente de Poder</h4>
+                <p>Suministro de energía eléctrica para energizar el electroimán.</p>
+              </div>
+            </div>
+
+            <!-- 8. Estructura y Pista -->
+            <div class="comp-card" data-comp="pista">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M4 15h16v-2H4v2zm0 4h16v-2H4v2zm0-8h16V9H4v2zm0-6v2h16V5H4z"/></svg></div>
+              <div class="comp-content">
+                <h4>Estructura y Riel Guía</h4>
+                <p>Soporte físico alineado para una trayectoria rectilínea precisa.</p>
+              </div>
+            </div>
+
+            <!-- 9. Computador -->
+            <div class="comp-card" data-comp="pc">
+              <div class="comp-icon"><svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg></div>
+              <div class="comp-content">
+                <h4>Computador / Interfaz</h4>
+                <p>Recepción de telemetría serial, procesamiento y cálculo gráfico.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contenedor para fotos reales del proyecto con subida interactiva -->
+          <div class="photo-slot" id="photo-montaje">
+            <input type="file" accept="image/*" class="photo-file-input" style="display:none;" id="file-montaje">
+            <img class="photo-slot-preview" alt="Foto del montaje">
+            <button class="photo-slot-remove" title="Eliminar imagen">&times;</button>
+            <div class="photo-slot-content">
+              <svg class="photo-slot-icon" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+              <div class="photo-slot-label">[INSERTAR FOTO REAL DEL MONTAJE]</div>
+              <div class="photo-slot-hint">Haz clic o arrastra una imagen aquí para visualizar la fotografía del prototipo</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 7 — SISTEMA DE MEDICIÓN
+           ========================================== -->
+      <section class="slide" id="slide-7" data-index="7">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">07 // SISTEMA CRONOMÉTRICO</span>
+            <h2 class="slide-title">Sistema de Medición Temporal</h2>
+          </div>
+          <div class="status-badge badge-theory">Metodología Experimental</div>
+        </div>
+
+        <div class="slide-body">
+          <!-- Animación esquemática SENSOR A ---- d ---- SENSOR B -->
+          <div class="timing-diagram-area">
+            <canvas id="canvas-slide-7" width="1100" height="220"></canvas>
+          </div>
+
+          <div class="timing-flow-row">
+            <div class="timing-box">
+              <div class="t-tag">t₀ = INICIO</div>
+              <h4 style="color:#ffffff;">Disparo Sensor A</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">
+                La esfera interrumpe el haz óptico del Sensor A. Arduino registra la marca de tiempo absoluta en microsegundos.
+              </p>
+            </div>
+
+            <div class="timing-box">
+              <div class="t-tag">t₁ = FINAL</div>
+              <h4 style="color:#ffffff;">Disparo Sensor B</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">
+                La esfera recorre la distancia calibrada y cruza el Sensor B. Arduino registra la segunda marca temporal.
+              </p>
+            </div>
+
+            <div class="timing-box" style="border-color:var(--green-laser);">
+              <div class="t-tag" style="color:var(--green-laser); text-shadow:0 0 10px var(--green-glow);">Δt = t₁ − t₀</div>
+              <h4 style="color:#ffffff;">Intervalo de Tránsito</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">
+                La diferencia matemática exacta entre ambas marcas de tiempo representa el tiempo que tardó la esfera en recorrer la distancia <code>d</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 8 — ¿CÓMO CALCULAMOS LA VELOCIDAD?
+           ========================================== -->
+      <section class="slide" id="slide-8" data-index="8">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">08 // MODELO MATEMÁTICO</span>
+            <h2 class="slide-title">¿Cómo Calculamos la Velocidad?</h2>
+          </div>
+          <div class="status-badge badge-example">Calculadora Interactiva</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="calc-split">
+            <!-- Fórmula y Explicación -->
+            <div style="display:flex; flex-direction:column; gap:16px;">
+              <div class="formula-box">
+                <div style="font-size:0.8rem; letter-spacing:1px; color:var(--text-muted); margin-bottom:6px;">
+                  ECUACIÓN DE VELOCIDAD MEDIA
+                </div>
+                <div class="formula-display">v = d / Δt</div>
+                <div class="formula-vars">
+                  <div class="formula-var"><code>v</code> Velocidad calculada</div>
+                  <div class="formula-var"><code>d</code> Distancia entre sensores</div>
+                  <div class="formula-var"><code>Δt</code> Tiempo de tránsito (t₁ − t₀)</div>
+                </div>
+              </div>
+
+              <div class="sci-card">
+                <h4 class="sci-card-title">Interpretación Física</h4>
+                <p class="sci-card-desc">
+                  Como la distancia entre ambos sensores es un valor fijo previamente medido con una regla o calibrador milimétrico, cualquier variación en el tiempo <code>Δt</code> refleja directamente la rapidez con la que se desplaza la esfera impulsada.
+                </p>
+              </div>
+            </div>
+
+            <!-- Calculadora Interactiva en Vivo -->
+            <div class="calc-widget">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4 style="font-size:1.05rem; color:#fff;">Calculadora de Laboratorio</h4>
+                <span class="status-badge badge-example">DATOS DE EJEMPLO</span>
+              </div>
+
+              <div class="calc-input-group">
+                <label for="calc-dist">
+                  Distancia entre sensores (d):
+                  <span id="lbl-dist-val">0.10 m (10 cm)</span>
+                </label>
+                <input type="number" id="calc-dist" class="calc-input" step="0.01" min="0.01" max="2.0" value="0.10">
+              </div>
+
+              <div class="calc-input-group">
+                <label for="calc-time">
+                  Tiempo medido por sensores (Δt):
+                  <span id="lbl-time-val">0.350 s</span>
+                </label>
+                <input type="number" id="calc-time" class="calc-input" step="0.001" min="0.001" max="10" value="0.350">
+              </div>
+
+              <div class="calc-presets">
+                <span style="font-size:0.75rem; color:var(--text-dim); align-self:center;">Presets:</span>
+                <button class="calc-preset-btn" data-d="0.10" data-t="0.350">Ejemplo Escolar</button>
+                <button class="calc-preset-btn" data-d="0.10" data-t="0.180">Tiro Rápido</button>
+                <button class="calc-preset-btn" data-d="0.15" data-t="0.420">Pista Extendida</button>
+              </div>
+
+              <div class="calc-results-box">
+                <div>
+                  <div class="calc-result-val" id="calc-out-ms">0.286</div>
+                  <div class="calc-result-lbl">Velocidad (m/s)</div>
+                </div>
+                <div style="width:1px; height:45px; background:rgba(0,240,255,0.25);"></div>
+                <div>
+                  <div class="calc-result-val" id="calc-out-kmh" style="color:var(--green-laser);">1.030</div>
+                  <div class="calc-result-lbl">Velocidad (km/h)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 9 — ARDUINO Y LOS SENSORES
+           ========================================== -->
+      <section class="slide" id="slide-9" data-index="9">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">09 // ADQUISICIÓN ELECTRÓNICA</span>
+            <h2 class="slide-title">Arduino y los Sensores</h2>
+          </div>
+          <div class="status-badge badge-real">Resolución: Microsegundos</div>
+        </div>
+
+        <div class="slide-body">
+          <!-- Diagrama de flujo de Arduino -->
+          <div class="flowchart-container">
+            <div class="flow-node">
+              <div class="flow-node-title">SENSOR A</div>
+              <div class="flow-node-desc">Detección óptica frontal</div>
+            </div>
+            <div class="flow-arrow-icon">➔</div>
+            <div class="flow-node highlight">
+              <div class="flow-node-title">ARDUINO: t₀</div>
+              <div class="flow-node-desc">Captura micros()</div>
+            </div>
+            <div class="flow-arrow-icon">➔</div>
+            <div class="flow-node">
+              <div class="flow-node-title">TRÁNSITO (d)</div>
+              <div class="flow-node-desc">Esfera en trayectoria</div>
+            </div>
+            <div class="flow-arrow-icon">➔</div>
+            <div class="flow-node">
+              <div class="flow-node-title">SENSOR B</div>
+              <div class="flow-node-desc">Detección óptica final</div>
+            </div>
+            <div class="flow-arrow-icon">➔</div>
+            <div class="flow-node highlight">
+              <div class="flow-node-title">ARDUINO: t₁</div>
+              <div class="flow-node-desc">Cálculo instantáneo</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:stretch;">
+            <div class="sci-card">
+              <h4 class="sci-card-title">¿Por qué usar microsegundos (<code>micros()</code>)?</h4>
+              <p class="sci-card-desc">
+                En física experimental escolar, una esfera veloz recorre 10 cm en fracciones de segundo. El uso de la función <code>micros()</code> en Arduino permite una resolución de 4 microsegundos, eliminando los errores de retardo o latencia que ocurrirían con un cronómetro manual convencional.
+              </p>
+            </div>
+
+            <!-- Contenedor para fotos de los sensores -->
+            <div class="photo-slot" id="photo-sensores" style="min-height:160px;">
+              <input type="file" accept="image/*" class="photo-file-input" style="display:none;" id="file-sensores">
+              <img class="photo-slot-preview" alt="Foto de los sensores">
+              <button class="photo-slot-remove" title="Eliminar imagen">&times;</button>
+              <div class="photo-slot-content">
+                <svg class="photo-slot-icon" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <div class="photo-slot-label">[INSERTAR FOTO DE LOS SENSORES]</div>
+                <div class="photo-slot-hint">Fotografía de los fotosensores o emisores IR montados</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 10 — SOFTWARE DE MEDICIÓN
+           ========================================== -->
+      <section class="slide" id="slide-10" data-index="10">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">10 // TELEMETRÍA Y SERIAL</span>
+            <h2 class="slide-title">Software de Medición y Datos</h2>
+          </div>
+          <div class="status-badge badge-pending">Representación de la interfaz</div>
+        </div>
+
+        <div class="slide-body">
+          <!-- Diagrama de arquitectura del pipeline -->
+          <div class="software-stack-row">
+            <span class="software-stack-item">SENSORES</span>
+            <span class="software-stack-sep">➔</span>
+            <span class="software-stack-item">ARDUINO</span>
+            <span class="software-stack-sep">➔</span>
+            <span class="software-stack-item">USB / SERIAL</span>
+            <span class="software-stack-sep">➔</span>
+            <span class="software-stack-item">COMPUTADOR</span>
+            <span class="software-stack-sep">➔</span>
+            <span class="software-stack-item">INTERFAZ GRÁFICA</span>
+            <span class="software-stack-sep">➔</span>
+            <span class="software-stack-item">TABLA Y GRÁFICAS</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:20px; align-items:stretch;">
+            <!-- Mockup de interfaz gráfica -->
+            <div class="gui-mockup-frame">
+              <div class="gui-mockup-topbar">
+                <span>TERMINAL SERIAL // ARDUINO COM3 [9600 BAUD]</span>
+                <span style="color:var(--green-laser);">● CONECTADO</span>
+              </div>
+              <div class="gui-mockup-body">
+                <div class="gui-stat-card">
+                  <div class="gui-stat-val">0.286</div>
+                  <div class="gui-stat-lbl">Velocidad (m/s)</div>
+                </div>
+                <div class="gui-stat-card">
+                  <div class="gui-stat-val">0.350</div>
+                  <div class="gui-stat-lbl">Tiempo (s)</div>
+                </div>
+                <div class="gui-stat-card">
+                  <div class="gui-stat-val">0.100</div>
+                  <div class="gui-stat-lbl">Distancia (m)</div>
+                </div>
+                <div class="gui-stat-card">
+                  <div class="gui-stat-val" style="color:var(--green-laser);">#05</div>
+                  <div class="gui-stat-lbl">Ensayo Activo</div>
+                </div>
+              </div>
+              <div style="padding:10px 20px; font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); background:rgba(0,0,0,0.3); border-top:1px solid rgba(255,255,255,0.05);">
+                > SENSOR_A_TRIGGER: 1420580 us<br>
+                > SENSOR_B_TRIGGER: 1770580 us<br>
+                > DELTA_T: 350000 us (0.350 s) | SPEED: 0.2857 m/s | READY FOR NEXT RUN
+              </div>
+            </div>
+
+            <!-- Contenedor para fotos del circuito real -->
+            <div class="photo-slot" id="photo-circuito">
+              <input type="file" accept="image/*" class="photo-file-input" style="display:none;" id="file-circuito">
+              <img class="photo-slot-preview" alt="Foto del circuito">
+              <button class="photo-slot-remove" title="Eliminar imagen">&times;</button>
+              <div class="photo-slot-content">
+                <svg class="photo-slot-icon" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                <div class="photo-slot-label">[INSERTAR FOTO DEL CIRCUITO]</div>
+                <div class="photo-slot-hint">Circuito, protoboard o placa de conexión Arduino</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 11 — DATOS EXPERIMENTALES
+           ========================================== -->
+      <section class="slide" id="slide-11" data-index="11">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">11 // REGISTRO Y ANÁLISIS</span>
+            <h2 class="slide-title">Datos Experimentales y Gráfica Dinámica</h2>
+          </div>
+          <div class="status-badge badge-example">DATOS DE EJEMPLO + TIEMPO REAL</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="data-screen-split">
+            <!-- Tabla interactiva editable -->
+            <div class="data-table-container">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h4 style="font-size:0.95rem; color:#fff;">Tabla de Mediciones</h4>
+                <button class="btn-secondary" id="btn-clear-data" style="padding:4px 10px; font-size:0.75rem;">Limpiar a defaults</button>
+              </div>
+
+              <div class="data-table-wrapper">
+                <table class="data-table" id="exp-data-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Tiempo (s)</th>
+                      <th>Distancia (m)</th>
+                      <th>Vel. (m/s)</th>
+                      <th>Vel. (km/h)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="exp-table-body">
+                    <!-- Filas inyectadas por JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Formulario para agregar medición manualmente -->
+              <div class="data-form-row">
+                <input type="number" id="tbl-input-t" class="calc-input" placeholder="Tiempo (s)" step="0.001" style="font-size:0.9rem; padding:6px 10px;">
+                <input type="number" id="tbl-input-d" class="calc-input" placeholder="Distancia (m)" step="0.01" value="0.10" style="font-size:0.9rem; padding:6px 10px;">
+                <button class="btn-primary" id="btn-add-row" style="padding:8px 14px; font-size:0.85rem;">+ AGREGAR</button>
+              </div>
+            </div>
+
+            <!-- Gráfica interactiva en Canvas -->
+            <div class="data-chart-container">
+              <div class="chart-header">
+                <h4 style="font-size:0.95rem; color:#fff;" id="chart-title">Velocidad vs. Número de Medición</h4>
+                <div style="display:flex; gap:6px;">
+                  <button class="calc-preset-btn active" id="btn-chart-speed">Velocidad</button>
+                  <button class="calc-preset-btn" id="btn-chart-time">Tiempo</button>
+                </div>
+              </div>
+              <div class="chart-canvas-box">
+                <canvas id="canvas-chart" width="480" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 12 — EXPERIMENTO EN TIEMPO REAL
+           ========================================== -->
+      <section class="slide" id="slide-12" data-index="12">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">12 // LABORATORIO VIRTUAL</span>
+            <h2 class="slide-title">Experimento en Tiempo Real</h2>
+          </div>
+          <div class="status-badge badge-real">Consola de Simulación Activa</div>
+        </div>
+
+        <div class="slide-body">
+          <!-- Paneles de telemetría de laboratorio -->
+          <div class="lab-telemetry-grid">
+            <div class="telemetry-tile">
+              <div class="sensor-status-dot" id="dot-sensor-a"></div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">SENSOR A</div>
+              <div class="telemetry-val" id="val-sensor-a" style="font-size:1rem; color:var(--text-dim);">ESPERANDO</div>
+            </div>
+
+            <div class="telemetry-tile">
+              <div class="sensor-status-dot" id="dot-sensor-b"></div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">SENSOR B</div>
+              <div class="telemetry-val" id="val-sensor-b" style="font-size:1rem; color:var(--text-dim);">ESPERANDO</div>
+            </div>
+
+            <div class="telemetry-tile">
+              <div style="font-size:0.75rem; color:var(--text-muted);">TIEMPO (s)</div>
+              <div class="telemetry-val" id="val-realtime-t" style="color:var(--cyan-primary);">0.000000</div>
+            </div>
+
+            <div class="telemetry-tile">
+              <div style="font-size:0.75rem; color:var(--text-muted);">DISTANCIA (m)</div>
+              <div class="telemetry-val" id="val-realtime-d">0.100</div>
+            </div>
+
+            <div class="telemetry-tile">
+              <div style="font-size:0.75rem; color:var(--text-muted);">VELOCIDAD (m/s)</div>
+              <div class="telemetry-val" id="val-realtime-v" style="color:var(--green-laser);">0.000</div>
+            </div>
+
+            <div class="telemetry-tile">
+              <div style="font-size:0.75rem; color:var(--text-muted);">MEDICIONES</div>
+              <div class="telemetry-val" id="val-realtime-count">0</div>
+            </div>
+          </div>
+
+          <!-- Pista interactiva de simulación de paso -->
+          <div class="realtime-track-box">
+            <canvas id="canvas-realtime-track" width="1100" height="180"></canvas>
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:16px;">
+            <button class="btn-primary" id="btn-trigger-realtime" style="padding:12px 36px; font-size:1rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              <span>SIMULAR PASO DE LA ESFERA</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 13 — TEORÍA VS EXPERIMENTO
+           ========================================== -->
+      <section class="slide" id="slide-13" data-index="13">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">13 // ANÁLISIS CRÍTICO</span>
+            <h2 class="slide-title">Teoría vs. Experimento</h2>
+          </div>
+          <div class="status-badge badge-theory">Modelo Matemático ➔ Medición Real</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="theory-vs-exp-split">
+            <!-- Bloque Teoría -->
+            <div class="compare-card theory-card">
+              <div class="status-badge badge-theory" style="margin-bottom:12px;">TEORÍA PURA</div>
+              <h3 style="color:#ffffff; margin-bottom:10px;">Modelo Matemático Ideal</h3>
+              <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6;">
+                En la teoría asumimos velocidad constante ideal o aceleración puntual pura sin rozamiento:
+              </p>
+              <div class="formula-box" style="margin:14px 0; padding:12px;">
+                <div class="formula-display" style="font-size:1.6rem; margin-bottom:0;">v = d / Δt</div>
+              </div>
+              <p style="color:var(--text-muted); font-size:0.85rem;">
+                Asume que la esfera se mueve en un vacío perfecto sin fricción mecánica, sin rotación y con alineación milimétrica exacta con los sensores.
+              </p>
+            </div>
+
+            <!-- Bloque Experimento -->
+            <div class="compare-card exp-card">
+              <div class="status-badge badge-real" style="margin-bottom:12px;">EXPERIMENTO REAL</div>
+              <h3 style="color:#ffffff; margin-bottom:10px;">Adquisición con Sensores y Arduino</h3>
+              <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6;">
+                En el laboratorio real, los microsegundos capturan la realidad física del montaje:
+              </p>
+              <div class="formula-box" style="margin:14px 0; padding:12px; border-color:var(--green-laser);">
+                <div class="formula-display" style="font-size:1.6rem; margin-bottom:0; color:var(--green-laser);">v_exp = d / (t₁ − t₀)</div>
+              </div>
+              <p style="color:var(--text-muted); font-size:0.85rem;">
+                Arduino calcula la velocidad promediando el intervalo entre los dos sensores ópticos en tiempo real con conversión automática a km/h.
+              </p>
+            </div>
+          </div>
+
+          <!-- Fuentes de Variación Experimental -->
+          <div class="sources-box">
+            <h4 style="color:#ffffff; font-size:0.95rem;">Posibles Fuentes de Dispersión Experimental:</h4>
+            <div class="sources-list">
+              <div class="source-item">
+                <strong style="color:var(--cyan-primary);">Tiempo de respuesta:</strong> Latencia en la conmutación de los fotosensores o fotodiodos.
+              </div>
+              <div class="source-item">
+                <strong style="color:var(--cyan-primary);">Fricción y rodamiento:</strong> Rozamiento con las paredes guía de la pista.
+              </div>
+              <div class="source-item">
+                <strong style="color:var(--cyan-primary);">Centrado de la esfera:</strong> Variaciones leves en la línea de paso que alteran el punto de corte.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 14 — POSIBLES ANÁLISIS FÍSICOS
+           ========================================== -->
+      <section class="slide" id="slide-14" data-index="14">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">14 // PERSPECTIVA CIENTÍFICA</span>
+            <h2 class="slide-title">Posibles Análisis Físicos Posteriores</h2>
+          </div>
+          <div class="status-badge badge-pending">Dato por completar con más mediciones</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="future-physics-grid">
+            <div class="future-phys-card">
+              <h4 style="color:#ffffff;">Velocidad Media</h4>
+              <div class="future-phys-formula">v = d / Δt</div>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Rapidez promedio entre ambos sensores de paso.</p>
+            </div>
+
+            <div class="future-phys-card">
+              <h4 style="color:#ffffff;">Aceleración Media</h4>
+              <div class="future-phys-formula">a = Δv / Δt</div>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Tasa de cambio de velocidad (requiere múltiples pares de sensores).</p>
+            </div>
+
+            <div class="future-phys-card">
+              <h4 style="color:#ffffff;">Energía Cinética</h4>
+              <div class="future-phys-formula">Ec = ½ · m · v²</div>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Energía del movimiento (requiere medir la masa <code>m</code> de la esfera).</p>
+            </div>
+
+            <div class="future-phys-card">
+              <h4 style="color:#ffffff;">Cantidad de Movimiento</h4>
+              <div class="future-phys-formula">p = m · v</div>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Momento lineal transferido por el impulso electromagnético.</p>
+            </div>
+          </div>
+
+          <!-- Simulador de variación de distancia -->
+          <div class="dist-sim-interactive">
+            <div style="flex:1;">
+              <h4 style="color:#ffffff; margin-bottom:4px;">Explorador de Distancia entre Sensores:</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Observa cómo cambiar la distancia <code>d</code> afecta el intervalo de tiempo esperado para una misma velocidad teórica constante de 0.30 m/s:
+              </p>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px;">
+              <label style="font-family:var(--font-mono); color:var(--cyan-primary);">
+                d = <span id="dist-slider-val">0.10</span> m
+              </label>
+              <input type="range" id="dist-slider" min="0.05" max="0.30" step="0.01" value="0.10" style="cursor:pointer; accent-color:var(--cyan-primary);">
+              <div class="sim-telemetry-pill" id="dist-time-preview">
+                Δt esperado: 0.333 s
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 15 — CONCLUSIONES & ¿QUÉ APRENDIMOS?
+           ========================================== -->
+      <section class="slide" id="slide-15" data-index="15">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">15 // INTEGRACIÓN DE CONOCIMIENTO</span>
+            <h2 class="slide-title">Conclusiones y ¿Qué Aprendimos?</h2>
+          </div>
+          <div class="status-badge badge-theory">Pilares de Aprendizaje</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="conclusions-grid">
+            <div class="learned-card">
+              <div class="learned-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <h4 style="color:#ffffff;">Física</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Comprender de forma experimental cómo una fuerza electromagnética puede modificar el estado de movimiento de una masa.
+              </p>
+            </div>
+
+            <div class="learned-card">
+              <div class="learned-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+              </div>
+              <h4 style="color:#ffffff;">Electromagnetismo</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Relacionar el paso de corriente eléctrica a través de bobinas con la generación de un campo magnético inductor.
+              </p>
+            </div>
+
+            <div class="learned-card">
+              <div class="learned-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              </div>
+              <h4 style="color:#ffffff;">Programación</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Configurar Arduino para capturar marcas de tiempo en microsegundos y procesar telemetría serial en el computador.
+              </p>
+            </div>
+
+            <div class="learned-card">
+              <div class="learned-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              </div>
+              <h4 style="color:#ffffff;">Experimentación</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted);">
+                Aplicar el método científico: medir, repetir ensayos, contrastar con la teoría y analizar dispersiones.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bloc editable de conclusiones finales -->
+          <div class="editable-conclusions-box">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--cyan-primary);">
+                // BLOC EDITABLE DE CONCLUSIONES DE LABORATORIO (Puedes escribir notas aquí durante la exposición)
+              </span>
+              <span style="font-size:0.75rem; color:var(--text-dim);">Editable en vivo</span>
+            </div>
+            <textarea class="editable-conclusions-area" placeholder="Escribe aquí las conclusiones finales obtenidas con tu montaje físico real (por ejemplo: 'La esfera alcanzó una velocidad media de 0.28 m/s...', 'Se observó que la sincronización del pulso es crítica para evitar el frenado magnético...')..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SLIDE 16 / FINAL — DEMOSTRACIÓN Y CIERRE
+           ========================================== -->
+      <section class="slide" id="slide-16" data-index="16">
+        <div class="slide-header">
+          <div>
+            <span class="slide-tag">16 // CONCLUSIÓN Y PREGUNTAS</span>
+            <h2 class="slide-title">¿Listos para el Experimento?</h2>
+          </div>
+          <div class="status-badge badge-real">Demostración en Vivo</div>
+        </div>
+
+        <div class="slide-body">
+          <div class="final-slide-container">
+            <h3 style="font-size:2rem; font-weight:800; color:#fff;">Demostración del Prototipo Físico</h3>
+            <p style="max-width:650px; color:var(--text-muted); font-size:1.05rem;">
+              El acelerador electromagnético de bobinas demuestra cómo la integración de electromagnetismo, electrónica y programación permite diseñar experimentos científicos medibles y reproducibles.
+            </p>
+
+            <!-- Acciones directas -->
+            <div class="final-action-buttons">
+              <button class="btn-primary" id="btn-final-sim">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                <span>REPETIR SIMULACIÓN</span>
+              </button>
+              <button class="btn-secondary" id="btn-final-data">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+                <span>VER DATOS EXPERIMENTALES</span>
+              </button>
+              <button class="btn-secondary" id="btn-final-restart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                <span>VOLVER AL INICIO</span>
+              </button>
+            </div>
+
+            <!-- Créditos finales -->
+            <div style="margin-top:20px; border-top:1px solid rgba(0,240,255,0.2); padding-top:20px;">
+              <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--cyan-primary); letter-spacing:2px; margin-bottom:8px;">
+                EXPOSITORES // PROYECTO DE FÍSICA
+              </div>
+              <div class="cover-authors" style="font-size:0.9rem;">
+                <span>Nicolas Valencia</span> •
+                <span>Yojhan Cubillos</span> •
+                <span>Santiago Hernandez</span> •
+                <span>Matias Ramos</span>
+              </div>
+              <div style="font-weight:700; color:var(--cyan-primary); margin-top:6px;">Grado 11°</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BARRA INFERIOR DE NAVEGACIÓN FLOTANTE -->
+    <footer class="bottom-nav">
+      <div class="nav-buttons-group">
+        <button class="nav-btn" id="btn-prev-slide" title="Diapositiva Anterior (←)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          <span>Anterior</span>
+        </button>
+        <button class="nav-btn" id="btn-next-slide" title="Siguiente Diapositiva (→ / Espacio)">
+          <span>Siguiente</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+      </div>
+
+      <!-- Puntos de navegación rápida (dots) -->
+      <div class="nav-dots-container" id="nav-dots-container">
+        <!-- 16 dots inyectados por JS -->
+      </div>
+
+      <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim); display:flex; gap:12px;">
+        <span>Atajos: [←][→] Navegar</span>
+        <span>[F] Pantalla completa</span>
+        <span>[M] Índice</span>
+      </div>
+    </footer>
+
+    <!-- MENÚ LATERAL DRAWER // ÍNDICE COMPLETO -->
+    <aside class="menu-drawer" id="menu-drawer">
+      <div class="drawer-header">
+        <span class="drawer-title">ÍNDICE DE LA EXPOSICIÓN</span>
+        <button class="modal-close-btn" id="btn-close-drawer">&times;</button>
+      </div>
+      <div class="drawer-list" id="drawer-list">
+        <!-- Generado dinámicamente por JS -->
+      </div>
+    </aside>
+
+    <!-- MODAL DETALLE DE COMPONENTES -->
+    <div class="modal-overlay" id="comp-modal">
+      <div class="modal-card">
+        <button class="modal-close-btn" id="btn-close-modal">&times;</button>
+        <div class="status-badge badge-real" id="modal-badge">COMPONENTE</div>
+        <h3 style="font-size:1.4rem; color:#fff; margin:10px 0;" id="modal-title">Nombre del Componente</h3>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:14px;">
+          <div>
+            <h4 style="font-size:0.85rem; color:var(--cyan-primary); text-transform:uppercase;">Función Principal:</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;" id="modal-function">Descripción de la función.</p>
+          </div>
+          <div>
+            <h4 style="font-size:0.85rem; color:var(--green-laser); text-transform:uppercase;">Por qué es importante en el proyecto:</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;" id="modal-importance">Importancia científica.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

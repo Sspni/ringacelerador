@@ -1,0 +1,1896 @@
+/* ==========================================================================
+   COIL RING ACCELERATOR — FUTURISTIC LABORATORY PRESENTATION STYLESHEET
+   Estilo: Dark Scientific / Futuristic Laboratory
+   Desarrollado para Grado 11° — 100% Vanilla CSS
+   ========================================================================== */
+
+:root {
+  /* Paleta cromática científica */
+  --bg-deep: #050811;
+  --bg-panel: rgba(10, 18, 32, 0.78);
+  --bg-panel-solid: #0d1627;
+  --bg-card: rgba(16, 28, 50, 0.65);
+  --bg-card-hover: rgba(22, 38, 68, 0.85);
+  
+  --cyan-primary: #00f0ff;
+  --cyan-glow: rgba(0, 240, 255, 0.45);
+  --cyan-subtle: rgba(0, 240, 255, 0.15);
+  
+  --blue-electric: #0066ff;
+  --blue-glow: rgba(0, 102, 255, 0.4);
+  
+  --violet-pulse: #a855f7;
+  --violet-glow: rgba(168, 85, 247, 0.4);
+  
+  --green-laser: #00ff88;
+  --green-glow: rgba(0, 255, 136, 0.4);
+  
+  --amber-warning: #ffb703;
+  --amber-glow: rgba(255, 183, 3, 0.4);
+  
+  --text-main: #f0f6fc;
+  --text-muted: #8b9bb4;
+  --text-dim: #54657e;
+  
+  --border-cyan: rgba(0, 240, 255, 0.28);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  
+  --font-tech: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
+  
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset y caja general */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: var(--font-tech);
+  font-size: 15px;
+  line-height: 1.5;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fondo dinámico y lienzo cuántico */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* Rejilla de circuito de fondo */
+.circuit-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Contenedor principal de la presentación (Aspect ratio 16:9) */
+#presentation-app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   BARRA SUPERIOR HUD (HEADS-UP DISPLAY)
+   ========================================================================== */
+.top-hud {
+  height: 58px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(6, 12, 22, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-cyan);
+  z-index: 20;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition-smooth);
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lab-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--border-cyan);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: var(--cyan-primary);
+  text-transform: uppercase;
+}
+
+.lab-pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--cyan-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--cyan-primary);
+  animation: pulse-dot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.presentation-title-hud {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #c9d7ec;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.presentation-title-hud span {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.hud-center {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cyan-primary);
+  letter-spacing: 2px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 3px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.slide-counter .current-num {
+  color: #ffffff;
+  text-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.slide-counter .total-num {
+  color: var(--text-muted);
+}
+
+/* Barra de progreso interactiva */
+.progress-container {
+  width: 180px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 6.25%;
+  background: linear-gradient(90deg, var(--blue-electric), var(--cyan-primary));
+  box-shadow: 0 0 10px var(--cyan-primary);
+  border-radius: 3px;
+  transition: width var(--transition-smooth);
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hud-btn {
+  background: rgba(16, 28, 50, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.hud-btn:hover {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: var(--cyan-primary);
+  color: #ffffff;
+  box-shadow: 0 0 12px var(--cyan-glow);
+  transform: translateY(-1px);
+}
+
+.hud-btn:active {
+  transform: translateY(0);
+}
+
+.hud-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ==========================================================================
+   ÁREA DE DIAPOSITIVAS (VIEWPORT & TRANSICIONES)
+   ========================================================================== */
+.slides-viewport {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px 72px 36px;
+}
+
+.slide {
+  position: absolute;
+  top: 16px;
+  bottom: 72px;
+  left: 36px;
+  right: 36px;
+  max-width: 1440px;
+  margin: 0 auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.97) translateY(15px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-cyan);
+  border-radius: 18px;
+  padding: 28px 36px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.04);
+  backdrop-filter: blur(16px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10;
+}
+
+/* Scrollbar estilizada */
+.slide::-webkit-scrollbar {
+  width: 6px;
+}
+.slide::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+.slide::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 3px;
+}
+.slide::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan-primary);
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  z-index: 11;
+}
+
+/* Encabezados y jerarquía de diapositivas */
+.slide-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+  padding-bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.slide-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--cyan-primary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.slide-title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #ffffff 40%, var(--cyan-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+.slide-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin-top: 4px;
+}
+
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 0;
+}
+
+/* ==========================================================================
+   COMPONENTES CIENTÍFICOS COMUNES
+   ========================================================================== */
+
+/* Badges de rigor experimental */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.badge-example {
+  background: rgba(255, 183, 3, 0.12);
+  color: var(--amber-warning);
+  border: 1px solid rgba(255, 183, 3, 0.35);
+}
+
+.badge-pending {
+  background: rgba(168, 85, 247, 0.12);
+  color: var(--violet-pulse);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.badge-real {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--green-laser);
+  border: 1px solid rgba(0, 255, 136, 0.35);
+}
+
+.badge-theory {
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--cyan-primary);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+}
+
+/* Tarjetas científicas glassmorphism */
+.sci-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-fast);
+}
+
+.sci-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--cyan-primary);
+  opacity: 0.4;
+  transition: opacity var(--transition-fast);
+}
+
+.sci-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 240, 255, 0.1);
+}
+
+.sci-card:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 8px var(--cyan-primary);
+}
+
+.sci-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sci-card-title svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--cyan-primary);
+}
+
+.sci-card-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* Botones tecnológicos */
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-electric), #00d2ff);
+  color: #ffffff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px var(--blue-glow);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 28px rgba(0, 240, 255, 0.6);
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(16, 28, 50, 0.8);
+  color: var(--cyan-primary);
+  border: 1px solid var(--border-cyan);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--cyan-primary);
+  box-shadow: 0 0 14px var(--cyan-glow);
+  color: #ffffff;
+}
+
+/* Fórmulas matemáticas científicas */
+.formula-box {
+  background: rgba(4, 9, 18, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.05);
+}
+
+.formula-display {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--cyan-primary);
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px var(--cyan-glow);
+  margin-bottom: 12px;
+}
+
+.formula-vars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.formula-var {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.formula-var code {
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  background: rgba(0, 240, 255, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Contenedores de imagen / Dropzones de fotografía */
+.photo-slot {
+  background: rgba(6, 12, 22, 0.7);
+  border: 2px dashed rgba(0, 240, 255, 0.35);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 200px;
+  position: relative;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  overflow: hidden;
+}
+
+.photo-slot:hover {
+  border-color: var(--cyan-primary);
+  background: rgba(0, 240, 255, 0.05);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+.photo-slot.dragover {
+  border-color: var(--green-laser);
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.photo-slot-icon {
+  width: 44px;
+  height: 44px;
+  fill: var(--cyan-primary);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.photo-slot-label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cyan-primary);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.photo-slot-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.photo-slot-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000000;
+  border-radius: 10px;
+  display: none;
+}
+
+.photo-slot.has-image .photo-slot-preview {
+  display: block;
+}
+
+.photo-slot.has-image .photo-slot-content {
+  display: none;
+}
+
+.photo-slot-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.photo-slot.has-image:hover .photo-slot-remove {
+  display: flex;
+}
+
+/* ==========================================================================
+   SLIDE 1 — PORTADA
+   ========================================================================== */
+#slide-1 {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.cover-wrapper {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.cover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 102, 255, 0.15);
+  border: 1px solid var(--border-cyan);
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: var(--cyan-primary);
+  text-transform: uppercase;
+}
+
+.cover-title {
+  font-size: 3.4rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  line-height: 1.1;
+  background: linear-gradient(180deg, #ffffff 30%, #8be8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 35px rgba(0, 240, 255, 0.35);
+}
+
+.cover-subtitle {
+  font-size: 1.35rem;
+  color: #c0d4f0;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.cover-anim-container {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  background: rgba(4, 9, 18, 0.7);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.cover-authors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: #c9d7ec;
+  font-size: 0.95rem;
+}
+
+.author-chip {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+}
+
+.grade-badge {
+  background: rgba(0, 240, 255, 0.18);
+  color: var(--cyan-primary);
+  border: 1px solid var(--cyan-primary);
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   SLIDE 2 — ¿QUÉ PROBLEMA QUEREMOS ESTUDIAR?
+   ========================================================================== */
+.question-hero {
+  background: rgba(0, 102, 255, 0.1);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.question-text {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.concepts-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.concept-card {
+  text-align: center;
+  padding: 24px 18px;
+}
+
+.concept-icon-box {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px auto;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--border-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+}
+
+.concept-icon-box svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--cyan-primary);
+}
+
+/* ==========================================================================
+   SLIDE 3 — ¿QUÉ ES UN COIL RING ACCELERATOR?
+   ========================================================================== */
+.coil-anatomy-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.diagram-interactive-area {
+  background: rgba(4, 9, 18, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.interactive-info-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.interactive-targets-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.target-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.target-tab.active, .target-tab:hover {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: var(--cyan-primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   SLIDE 4 — PRINCIPIO FÍSICO
+   ========================================================================== */
+.physics-chain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(6, 12, 22, 0.7);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+}
+
+.chain-step {
+  flex: 1;
+  background: rgba(16, 28, 50, 0.6);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 8px;
+  padding: 14px 10px;
+  text-align: center;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.chain-step:hover {
+  border-color: var(--cyan-primary);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+}
+
+.chain-arrow {
+  color: var(--cyan-primary);
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.physics-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.magnetic-sim-box {
+  background: rgba(4, 9, 18, 0.8);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   SLIDE 5 — ¿CÓMO FUNCIONA EL ACELERADOR? (SIMULADOR MULTIETAPA)
+   ========================================================================== */
+.sim-container {
+  background: rgba(4, 9, 18, 0.9);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sim-track-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  overflow: hidden;
+}
+
+.sim-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(16, 28, 50, 0.5);
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.sim-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-telemetry-pill {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--cyan-primary);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.sim-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.sim-step-card {
+  background: rgba(10, 18, 32, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.85rem;
+}
+
+.sim-step-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--cyan-primary);
+  margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   SLIDE 6 — COMPONENTES DEL PROYECTO
+   ========================================================================== */
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.comp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.comp-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--cyan-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.15);
+}
+
+.comp-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comp-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--cyan-primary);
+}
+
+.comp-content h4 {
+  font-size: 0.95rem;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.comp-content p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Modal de detalle de componente */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--cyan-primary);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 580px;
+  padding: 30px;
+  box-shadow: 0 0 35px var(--cyan-glow);
+  position: relative;
+  transform: scale(0.9);
+  transition: transform var(--transition-smooth);
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   SLIDE 7 — SISTEMA DE MEDICIÓN
+   ========================================================================== */
+.timing-diagram-area {
+  background: rgba(4, 9, 18, 0.9);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.timing-flow-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.timing-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-cyan);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+}
+
+.timing-box .t-tag {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cyan-primary);
+  text-shadow: 0 0 10px var(--cyan-glow);
+  margin-bottom: 6px;
+}
+
+/* ==========================================================================
+   SLIDE 8 — ¿CÓMO CALCULAMOS LA VELOCIDAD? (CALCULADORA)
+   ========================================================================== */
+.calc-split {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.calc-widget {
+  background: rgba(6, 14, 26, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.calc-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calc-input-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.calc-input-group label span {
+  color: var(--cyan-primary);
+  font-family: var(--font-mono);
+}
+
+.calc-input {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.calc-input:focus {
+  border-color: var(--cyan-primary);
+  box-shadow: 0 0 12px var(--cyan-glow);
+}
+
+.calc-presets {
+  display: flex;
+  gap: 8px;
+}
+
+.calc-preset-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.calc-preset-btn:hover {
+  background: rgba(0, 240, 255, 0.15);
+  color: #ffffff;
+  border-color: var(--cyan-primary);
+}
+
+.calc-results-box {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--border-cyan);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.calc-result-val {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.calc-result-lbl {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   SLIDE 9 — ARDUINO Y LOS SENSORES
+   ========================================================================== */
+.flowchart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(4, 9, 18, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+}
+
+.flow-node {
+  background: rgba(16, 28, 50, 0.7);
+  border: 1px solid var(--border-cyan);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.flow-node.highlight {
+  border-color: var(--green-laser);
+  box-shadow: 0 0 18px var(--green-glow);
+}
+
+.flow-node-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.flow-node-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.flow-arrow-icon {
+  color: var(--cyan-primary);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   SLIDE 10 — SOFTWARE DE MEDICIÓN (MOCKUP INTERFAZ)
+   ========================================================================== */
+.software-stack-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(10, 18, 32, 0.6);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.software-stack-item {
+  color: var(--cyan-primary);
+  background: rgba(0, 240, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.software-stack-sep {
+  color: var(--text-dim);
+}
+
+.gui-mockup-frame {
+  background: #060b14;
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.gui-mockup-topbar {
+  background: #0c1524;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.gui-mockup-body {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.gui-stat-card {
+  background: rgba(16, 28, 50, 0.5);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+
+.gui-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cyan-primary);
+}
+
+.gui-stat-lbl {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   SLIDE 11 — DATOS EXPERIMENTALES (TABLA Y GRÁFICA)
+   ========================================================================== */
+.data-screen-split {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.data-table-container {
+  background: rgba(6, 12, 22, 0.8);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.data-table-wrapper {
+  flex: 1;
+  max-height: 240px;
+  overflow-y: auto;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.data-table th {
+  background: #0f1c32;
+  color: var(--cyan-primary);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-cyan);
+  position: sticky;
+  top: 0;
+}
+
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: var(--font-mono);
+  color: #ffffff;
+}
+
+.data-table tr:hover {
+  background: rgba(0, 240, 255, 0.06);
+}
+
+.data-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.data-chart-container {
+  background: rgba(4, 9, 18, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-canvas-box {
+  flex: 1;
+  width: 100%;
+  min-height: 200px;
+  position: relative;
+}
+
+/* ==========================================================================
+   SLIDE 12 — EXPERIMENTO EN TIEMPO REAL (VIRTUAL LAB PANEL)
+   ========================================================================== */
+.lab-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.telemetry-tile {
+  background: rgba(6, 14, 26, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.telemetry-tile .sensor-status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 auto 6px auto;
+  background: #3a475d;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  transition: all var(--transition-fast);
+}
+
+.telemetry-tile .sensor-status-dot.active {
+  background: var(--green-laser);
+  box-shadow: 0 0 12px var(--green-laser);
+}
+
+.telemetry-val {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 4px;
+}
+
+.realtime-track-box {
+  background: #040810;
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   SLIDE 13 — TEORÍA VS EXPERIMENTO
+   ========================================================================== */
+.theory-vs-exp-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.compare-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 22px;
+  border: 1px solid var(--border-subtle);
+}
+
+.compare-card.theory-card {
+  border-color: rgba(0, 240, 255, 0.35);
+}
+
+.compare-card.exp-card {
+  border-color: rgba(0, 255, 136, 0.35);
+}
+
+.sources-box {
+  background: rgba(6, 12, 22, 0.7);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 10px;
+}
+
+.sources-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.source-item {
+  background: rgba(16, 28, 50, 0.5);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   SLIDE 14 — POSIBLES ANÁLISIS FÍSICOS
+   ========================================================================== */
+.future-physics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.future-phys-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+}
+
+.future-phys-formula {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cyan-primary);
+  margin: 10px 0;
+  text-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.dist-sim-interactive {
+  background: rgba(4, 9, 18, 0.85);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   SLIDE 15 — CONCLUSIONES & ¿QUÉ APRENDIMOS?
+   ========================================================================== */
+.conclusions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.learned-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.learned-icon-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.learned-icon-box svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--cyan-primary);
+}
+
+.editable-conclusions-box {
+  background: rgba(6, 12, 22, 0.8);
+  border: 1px dashed var(--border-cyan);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.editable-conclusions-area {
+  width: 100%;
+  min-height: 80px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: var(--font-tech);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  outline: none;
+  resize: vertical;
+}
+
+/* ==========================================================================
+   SLIDE 16 / FINAL — DEMOSTRACIÓN Y CIERRE
+   ========================================================================== */
+.final-slide-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+  height: 100%;
+}
+
+.final-action-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   BARRA DE NAVEGACIÓN INFERIOR FLOTANTE
+   ========================================================================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  background: rgba(6, 12, 22, 0.85);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 20;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition-smooth);
+}
+
+.nav-dots-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nav-dot:hover {
+  background: rgba(0, 240, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.nav-dot.active {
+  background: var(--cyan-primary);
+  box-shadow: 0 0 10px var(--cyan-primary);
+  width: 26px;
+  border-radius: 6px;
+}
+
+.nav-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-btn {
+  background: rgba(16, 28, 50, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: var(--cyan-primary);
+  box-shadow: 0 0 14px var(--cyan-glow);
+  transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   DRAWER / MENÚ DE ÍNDICE DE DIAPOSITIVAS
+   ========================================================================== */
+.menu-drawer {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 340px;
+  height: 100vh;
+  background: rgba(8, 14, 26, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border-cyan);
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.8);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  transition: right var(--transition-smooth);
+}
+
+.menu-drawer.open {
+  right: 0;
+}
+
+.drawer-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cyan-primary);
+  letter-spacing: 1px;
+}
+
+.drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.drawer-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  transition: all var(--transition-fast);
+}
+
+.drawer-item:hover {
+  background: rgba(0, 240, 255, 0.1);
+  color: #ffffff;
+}
+
+.drawer-item.active {
+  background: rgba(0, 240, 255, 0.2);
+  color: var(--cyan-primary);
+  font-weight: 700;
+  border-left: 3px solid var(--cyan-primary);
+}
+
+.drawer-item-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--cyan-primary);
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   MODO PRESENTACIÓN (FULLSCREEN & HUD MINIMIZATION)
+   ========================================================================== */
+body.presentation-mode .top-hud {
+  transform: translateY(-100%);
+}
+
+body.presentation-mode .bottom-nav {
+  transform: translateY(100%);
+}
+
+body.presentation-mode .slide {
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  border-radius: 12px;
+}
+
+/* Indicador flotante discreto en modo presentación */
+.fs-indicator {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-cyan);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  color: var(--cyan-primary);
+  z-index: 1000;
+  display: none;
+  cursor: pointer;
+}
+
+body.presentation-mode .fs-indicator {
+  display: block;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (PROYECTOR 16:9, TABLET, LAPTOP)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .slide {
+    padding: 20px;
+  }
+  .concepts-row, .sim-steps-grid, .future-physics-grid, .conclusions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .components-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .coil-anatomy-grid, .physics-split, .calc-split, .data-screen-split, .theory-vs-exp-split {
+    grid-template-columns: 1fr;
+  }
+  .cover-title {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-height: 720px) {
+  .slide {
+    padding: 16px 24px;
+    top: 10px;
+    bottom: 60px;
+  }
+  .slide-header {
+    margin-bottom: 12px;
+  }
+  .slide-title {
+    font-size: 1.5rem;
+  }
+  .cover-title {
+    font-size: 2.2rem;
+  }
+  .formula-display {
+    font-size: 1.7rem;
+  }
+}
